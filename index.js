@@ -6,11 +6,8 @@ const {sequelize} = require('./src/Database/db');
 
 //?-----------Moldels------------
 const Images = require('./src/Models/Images');
-
-
-
+const Folders = require('./src/Models/Folders');
 //?------------------------------
-
 
 sequelize.sync({ force: false }).then(() => {
   server.listen(PORT, () => console.log("SERVER IN PORT " + PORT));
