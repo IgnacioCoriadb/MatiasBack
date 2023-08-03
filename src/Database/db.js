@@ -1,4 +1,6 @@
 const { Sequelize } = require('sequelize');
+const { v4: uuidv4 } = require('uuid');
+
 const {
     DB_DATABASE,
     DB_USERNAME,
@@ -23,4 +25,4 @@ const sequelize = new Sequelize(`postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_H
   testConnection();
 
 
-  module.exports = {conn:sequelize};
+  module.exports = {sequelize:sequelize,Sequelize, uuidv4};
