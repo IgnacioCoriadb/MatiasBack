@@ -22,4 +22,4 @@ const Images = sequelize.define('Images',{
     }
 })
 
-module.exports = Images;
+module.exports = {Images,uuidv4,sequelize};

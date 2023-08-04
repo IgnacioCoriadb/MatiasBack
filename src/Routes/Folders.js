@@ -105,10 +105,4 @@ const deleteFolders=async(idDb)=>{
     }
 }
 
-
-
-
-
-
-
 module.exports = router;

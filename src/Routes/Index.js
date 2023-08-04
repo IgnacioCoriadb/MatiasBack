@@ -5,7 +5,7 @@ const router = Router();
 
 
 router.use("/folders",folders);
-router.use("/",images);
+router.use("/images",images);
 
 
 module.exports = router;
