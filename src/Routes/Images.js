@@ -1,8 +1,8 @@
 const {Router} = require("express");
 const router = Router();
+// const cloudinary = require("../Cloudinary/Cloudinary");
 
-
-router.get("/",  (req, res)=>{
+router.post("/",  (req, res)=>{
     res.json("funciona")
 })
 
