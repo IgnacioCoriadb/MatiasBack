@@ -27,7 +27,7 @@ router.post("/createFolder",  async(req, res)=>{
 
 router.get("/allFolders", async(req,res) => {
     try{
-        const folder = await Folder.findAll()
+        const folder = await Folders.findAll()
         const substringRemove= "imagesMatias/";
         const folderName = folder.map(name=> (
           {

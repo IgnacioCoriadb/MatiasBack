@@ -1,7 +1,5 @@
 const server = require('./app');
 const PORT = 3001;
-const dotenv = require('dotenv');
-dotenv.config();
 const {sequelize} = require('./src/Database/db');
 
 //?-----------Moldels------------

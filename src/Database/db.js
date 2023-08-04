@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
-
+const dotenv = require('dotenv');
+dotenv.config();
 const {
     DB_DATABASE,
     DB_USERNAME,
