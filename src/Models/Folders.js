@@ -1,5 +1,5 @@
 const {DataTypes}  = require('sequelize');
-const { sequelize, uuidv4 }= require('../Database/db');
+const { sequelize, uuidv4,Op }= require('../Database/db');
 
 const Folders = sequelize.define('Folders',{
     id: {
@@ -14,4 +14,4 @@ const Folders = sequelize.define('Folders',{
     
 })
 
-module.exports = Folders;
+module.exports = {Folders,Op};
