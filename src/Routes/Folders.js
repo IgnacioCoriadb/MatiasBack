@@ -4,26 +4,16 @@ const {Folders,Op} = require("../Models/Folders");
 const {Images} = require("../Models/Images");
 const cloudinary = require("../Cloudinary/Cloudinary");
 
+const {createFolder} =require("../Controllers/FoldersController");
 
 router.post("/createFolder",  async(req, res)=>{
-    const folder = 'imagesMatias';
     const { subfolder } = req.body;
-    const routeSubFolder = `${folder}/${subfolder}`;
-    // Crea la subcarpeta en Cloudinary
-     cloudinary.api.create_folder(routeSubFolder, (error, result) => {
-        if (error) {
-            console.error('Error al crear la subcarpeta:', error);
-            res.json('Error al crear la subcarpeta')
-        } else {
-            try{
-                Folders.create({folderName:subfolder})
-                res.json(`Carpeta ${subfolder} creada exitosamente`)
-              }catch(error){
-                console.error('Error al crear la subcarpeta:', error)
-                res.json('Error al crear la carpeta')
-              }
-        }
-    });
+    try{
+       res.json(await createFolder(subfolder));
+    }catch(err){
+        console.log("No se pudo ejecutar la funcion createFolder " +err);
+        res.json("No se pudo ejecutar la funcion createFolder " +err)
+    }
 });
 
 router.get("/allFolders", async(req,res) => {
