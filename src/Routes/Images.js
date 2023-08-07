@@ -1,11 +1,11 @@
 const {Router} = require("express");
 const router = Router();
-const cloudinary = require("../Cloudinary/Cloudinary");
 const multer = require('multer');
-const sharp = require('sharp');
+
 const  {Images,uuidv4,sequelize,QueryTypes} = require("../Models/Images");
 const {Folders} = require("../Models/Folders");
 
+const {insertCloudinary} = require("../Controllers/ImagesController");
 
 const upload = multer();
 
@@ -17,58 +17,10 @@ router.post("/uploadImage/:folder",upload.array('images', 50), async  (req, res)
         const result = await insertCloudinary(uploadedFiles,folder,subfolder)
         res.json(result);
     }catch(e){
-        console.log(e)
-        res.status(500).send('Error al procesar las imágenes');
+      console.log("No se pudo ejecutar la funcion insertCloudinary " +err);
+      res.json("No se pudo ejecutar la funcion insertCloudinary " +err);
     }
 })
-
-const insertDb = (uploadedUrls)=>{
-    Images.bulkCreate(uploadedUrls)
-}
-
-const insertCloudinary =async(uploadedFiles,folder,subfolder)=>{
-  try{
-    const folderExitst =await Folders.findAll({
-      where:{
-        folderName:folder
-      }
-    })
-    console.log(folderExitst)
-    if(folderExitst.length > 0){
-        const uploadPromises = uploadedFiles.map(async (file) => {
-            const compressedImageBuffer = await sharp(file.buffer)
-              .resize({ fit: 'fill' })
-              .toBuffer();
-      
-            return new Promise((resolve, reject) => {
-              cloudinary.uploader.upload_stream(
-                { resource_type: 'image', folder: subfolder },
-                (error, result) => {
-                  if (error) {
-                    reject('Error al subir la imagen a Cloudinary: ' + error);
-                  } else {
-                    const imageUrl = result.secure_url;
-                    const imageId = result.public_id;
-                    // Insert db
-                    const resObject = [{id: uuidv4(),url:imageUrl, folderName: folder, idCloud: imageId}];
-                    insertDb(resObject)
-                    resolve(resObject[0]); 
-                  }
-                }
-              ).end(compressedImageBuffer);
-            });
-          });
-          await Promise.all(uploadPromises);
-          return  "Imagen cargada";
-
-    }else{
-      return "No se encontró la carpeta " + folder;
-    }
-  }catch (error){
-    console.log(error);
-    return "No se pudieron guardar las imágenes";
-  }
-}
 
 //si paso parametro obtengo de una carpeta especifica sino la primer imagen  de cada carpeta
 router.get("/allImage/:folder?", async (req, res) =>{

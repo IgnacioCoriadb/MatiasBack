@@ -93,9 +93,6 @@ const deleteFolder = async(idDb)=>{
     }
 }
 
-
-
-
 module.exports = {
     createFolder,
     allFolder,
