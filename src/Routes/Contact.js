@@ -11,7 +11,6 @@ router.get("/",async(req, res) => {
         console.log("No se pudo ejecutar la funcion contact " +err);
         res.json("No se pudo ejecutar contact " +err);
     }
-
 })
 
 
