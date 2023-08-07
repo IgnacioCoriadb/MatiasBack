@@ -1,4 +1,4 @@
-const { Sequelize,Op } = require('sequelize');
+const { Sequelize,Op,QueryTypes } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -26,4 +26,4 @@ const sequelize = new Sequelize(`postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_H
   testConnection();
 
 
-  module.exports = {sequelize:sequelize,Sequelize,Op, uuidv4};
+  module.exports = {sequelize:sequelize,Sequelize,Op, uuidv4,QueryTypes};

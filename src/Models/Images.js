@@ -1,5 +1,5 @@
 const {DataTypes}  = require('sequelize');
-const { sequelize, uuidv4 }= require('../Database/db');
+const { sequelize, uuidv4 ,QueryTypes}= require('../Database/db');
 
 const Images = sequelize.define('Images',{
     
@@ -22,4 +22,4 @@ const Images = sequelize.define('Images',{
     }
 })
 
-module.exports = {Images,uuidv4,sequelize};
+module.exports = {Images,uuidv4,sequelize,QueryTypes};
