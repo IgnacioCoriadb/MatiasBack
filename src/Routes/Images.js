@@ -1,12 +1,7 @@
 const {Router} = require("express");
 const router = Router();
 const multer = require('multer');
-
-const  {Images,uuidv4,sequelize,QueryTypes} = require("../Models/Images");
-const {Folders} = require("../Models/Folders");
-
 const {insertCloudinary,getImage,deleteImageDb} = require("../Controllers/ImagesController");
-
 const upload = multer();
 
 router.post("/uploadImage/:folder",upload.array('images', 50), async  (req, res)=>{
@@ -20,7 +15,7 @@ router.post("/uploadImage/:folder",upload.array('images', 50), async  (req, res)
       console.log("No se pudo ejecutar la funcion insertCloudinary " +err);
       res.json("No se pudo ejecutar la funcion insertCloudinary " +err);
     }
-})
+});
 
 //si paso parametro obtengo de una carpeta especifica sino la primer imagen  de cada carpeta
 router.get("/allImage/:folder?", async (req, res) =>{
@@ -31,7 +26,7 @@ router.get("/allImage/:folder?", async (req, res) =>{
       console.log("No se pudo ejecutar la funcion getImage " +err);
       res.json("No se encontró la carpeta " +folder);
   }
-})
+});
 
 router.delete("/deleteImage/:idDb",async(req, res) => {
   const {idDb} = req.params;
@@ -42,7 +37,6 @@ router.delete("/deleteImage/:idDb",async(req, res) => {
     console.log("No se pudo eliminar la imagen " +error);
     res.json("No se pudo eliminar la imagen")
   }
-})
-
+});
 
 module.exports = router;

@@ -3,7 +3,6 @@ const cloudinary = require("../Cloudinary/Cloudinary");
 const  {Images,uuidv4,sequelize,QueryTypes} = require("../Models/Images");
 const sharp = require('sharp');
 
-
 const insertDb = (uploadedUrls)=>{
     Images.bulkCreate(uploadedUrls)
 }
@@ -90,7 +89,6 @@ const getImage = async(folder)=>{
     }
 }
 
-
 const deleteImageDb =async (idDb)=>{
     const image = await Images.findByPk(idDb);
     if(image){
@@ -101,9 +99,9 @@ const deleteImageDb =async (idDb)=>{
     }else{
       return "No se encontro imagen"
     }
-  }
-  
-  const deleteImageCloud = async(idCloud)=>{
+}
+
+const deleteImageCloud = async(idCloud)=>{
     const imagePublicId =idCloud;
       return new Promise((resolve, reject) => {
         cloudinary.uploader.destroy(imagePublicId, (error, result) => {
@@ -116,14 +114,7 @@ const deleteImageDb =async (idDb)=>{
         }
       });
     })
-  }
-
-
-
-
-
-
-
+}
 
 module.exports = {
     insertCloudinary,
