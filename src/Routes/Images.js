@@ -4,17 +4,18 @@ const cloudinary = require("../Cloudinary/Cloudinary");
 const multer = require('multer');
 const sharp = require('sharp');
 const  {Images,uuidv4,sequelize} = require("../Models/Images");
+const {Folders} = require("../Models/Folders");
 
 
 const upload = multer();
 
-router.post("/uploadImage/:folder",upload.array('images', 20), async  (req, res)=>{
+router.post("/uploadImage/:folder",upload.array('images', 50), async  (req, res)=>{
     try{
         const uploadedFiles = req.files;
         const {folder} = req.params;
         const subfolder =`imagesMatias/${folder}`;
-        const result = await insertCloudinary(uploadedFiles,folder,subfolder)
-        res.json(result);
+        await insertCloudinary(uploadedFiles,folder,subfolder)
+        res.json("Imagen cargada");
     }catch(e){
         console.log(e)
         res.status(500).send('Error al procesar las imágenes');
@@ -26,7 +27,13 @@ const insertDb = (uploadedUrls)=>{
 }
 
 const insertCloudinary =async(uploadedFiles,folder,subfolder)=>{
-    try{
+  try{
+    const folderExitst =await Folders.findAll({
+      where:{
+        folderName:folder
+      }
+    })
+    if(folderExitst.length > 0){
         const uploadPromises = uploadedFiles.map(async (file) => {
             const compressedImageBuffer = await sharp(file.buffer)
               .resize({ fit: 'fill' })
@@ -52,10 +59,14 @@ const insertCloudinary =async(uploadedFiles,folder,subfolder)=>{
           });
           const cloudinaryUrls = await Promise.all(uploadPromises);
           return  cloudinaryUrls;
-    }catch (error){
-        console.log(error);
-        return "No se pudieron guardar las imágenes";
+
+    }else{
+      return "No se encontró la carpeta " + folder;
     }
+  }catch (error){
+    console.log(error);
+    return "No se pudieron guardar las imágenes";
+  }
 }
   
   
