@@ -52,6 +52,43 @@ const insertCloudinary =async(uploadedFiles,folder,subfolder)=>{
     }
 }
   
+const getImage = async(folder)=>{
+    try{
+        if(folder){
+            return new Promise(async(resolve, reject)=>{
+                const folderExists = await Folders.findOne({
+                    where:{
+                      folderName:folder
+                    }
+                });
+                if(folderExists){
+                    const imagesFolder =await Images.findAll({
+                        where: {
+                            folderName: `${folder}`
+                        }
+                    })   
+                resolve(imagesFolder)
+                }else{
+                reject("Carpeta no encontrada");
+                }
+            })
+        }else{
+            return new Promise(async(resolve, reject)=>{
+                try{
+                    const imagesFolder =await sequelize.query('SELECT DISTINCT ON ("folderName") "url","folderName" FROM public."Images"', {
+                        type: QueryTypes.SELECT,
+                    })
+                    resolve(imagesFolder);
+                }catch(err){
+                    console.log(err);
+                    reject("No se encontraron las carpetas");
+                }
+            })
+        }
+    }catch(error){
+        return "No se pudieron obtener las imagenes " +error;
+    }
+}
 
 
 
@@ -64,5 +101,6 @@ const insertCloudinary =async(uploadedFiles,folder,subfolder)=>{
 
 
 module.exports = {
-    insertCloudinary
+    insertCloudinary,
+    getImage,
 }

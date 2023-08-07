@@ -5,7 +5,7 @@ const multer = require('multer');
 const  {Images,uuidv4,sequelize,QueryTypes} = require("../Models/Images");
 const {Folders} = require("../Models/Folders");
 
-const {insertCloudinary} = require("../Controllers/ImagesController");
+const {insertCloudinary,getImage} = require("../Controllers/ImagesController");
 
 const upload = multer();
 
@@ -26,30 +26,10 @@ router.post("/uploadImage/:folder",upload.array('images', 50), async  (req, res)
 router.get("/allImage/:folder?", async (req, res) =>{
   const {folder} =req.params;
   try{
-    if(folder){
-      const folderExists = await Folders.findOne({
-        where:{
-          folderName:folder
-        }
-      });
-    if(folderExists){
-      const imagesFolder =await Images.findAll({
-        where: {
-          folderName: `${folder}`
-        }
-    })   
-    res.json(imagesFolder)
-    }else{
-      res.json("Carpeta no encontrada")
-    }
-    }else{
-      const imagesFolder =await sequelize.query('SELECT DISTINCT ON ("folderName") "url","folderName" FROM public."Images"', {
-        type: QueryTypes.SELECT,
-      })
-      res.json(imagesFolder)
-    }
-  }catch(error){
-    res.json("No se pudieron obtener las imagenes");
+    res.json(await getImage(folder))
+  }catch(err){
+      console.log("No se pudo ejecutar la funcion getImage " +err);
+      res.json("No se encontró la carpeta " +folder);
   }
 })
 
