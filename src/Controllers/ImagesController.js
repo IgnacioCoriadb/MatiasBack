@@ -91,7 +91,32 @@ const getImage = async(folder)=>{
 }
 
 
-
+const deleteImageDb =async (idDb)=>{
+    const image = await Images.findByPk(idDb);
+    if(image){
+      const idCloud = image.dataValues.idCloud;
+      const deleteCloud =await deleteImageCloud(idCloud)
+      await image.destroy();
+      return deleteCloud
+    }else{
+      return "No se encontro imagen"
+    }
+  }
+  
+  const deleteImageCloud = async(idCloud)=>{
+    const imagePublicId =idCloud;
+      return new Promise((resolve, reject) => {
+        cloudinary.uploader.destroy(imagePublicId, (error, result) => {
+        if (error) {
+          console.error('Error al eliminar la imagen:', error);
+          reject('Error al eliminar la imagen');
+        }else{
+          console.log('Imagen eliminada exitosamente:', result);
+          resolve('Imagen eliminada exitosamente');
+        }
+      });
+    })
+  }
 
 
 
@@ -103,4 +128,5 @@ const getImage = async(folder)=>{
 module.exports = {
     insertCloudinary,
     getImage,
+    deleteImageDb
 }

@@ -5,7 +5,7 @@ const multer = require('multer');
 const  {Images,uuidv4,sequelize,QueryTypes} = require("../Models/Images");
 const {Folders} = require("../Models/Folders");
 
-const {insertCloudinary,getImage} = require("../Controllers/ImagesController");
+const {insertCloudinary,getImage,deleteImageDb} = require("../Controllers/ImagesController");
 
 const upload = multer();
 
@@ -44,30 +44,5 @@ router.delete("/deleteImage/:idDb",async(req, res) => {
   }
 })
 
-const deleteImageDb =async (idDb)=>{
-  const image = await Images.findByPk(idDb);
-  if(image){
-    const idCloud = image.dataValues.idCloud;
-    const deleteCloud =await deleteImageCloud(idCloud)
-    await image.destroy();
-    return deleteCloud
-  }else{
-    return "No se encontro imagen"
-  }
-}
 
-const deleteImageCloud = async(idCloud)=>{
-  const imagePublicId =idCloud;
-    return new Promise((resolve, reject) => {
-      cloudinary.uploader.destroy(imagePublicId, (error, result) => {
-      if (error) {
-        console.error('Error al eliminar la imagen:', error);
-        reject('Error al eliminar la imagen');
-      }else{
-        console.log('Imagen eliminada exitosamente:', result);
-        resolve('Imagen eliminada exitosamente');
-      }
-    });
-  })
-}
 module.exports = router;
