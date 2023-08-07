@@ -1,7 +1,7 @@
 const {Router} = require("express");
 const router = Router();
 const {Folders,Op} = require("../Models/Folders");
-const Images = require("../Models/Images");
+const {Images} = require("../Models/Images");
 const cloudinary = require("../Cloudinary/Cloudinary");
 
 
