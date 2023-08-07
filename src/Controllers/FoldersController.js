@@ -24,10 +24,26 @@ const createFolder = async (subfolder)=>{
     })
 }
 
-
+const allFolder =async() => {
+    try{
+        const folder = await Folders.findAll()
+        const substringRemove= "imagesMatias/";
+        const folderName = folder.map(name=> (
+          {
+           name:name.folderName.replace(substringRemove,""),
+           id: name.id
+          }
+        ));
+        return folderName;
+    }catch(error){
+        console.log(error)
+        return "Error al obtener las carpetas";
+    }
+}
 
 
 
 module.exports = {
-    createFolder
+    createFolder,
+    allFolder
 }

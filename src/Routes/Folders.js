@@ -4,7 +4,7 @@ const {Folders,Op} = require("../Models/Folders");
 const {Images} = require("../Models/Images");
 const cloudinary = require("../Cloudinary/Cloudinary");
 
-const {createFolder} =require("../Controllers/FoldersController");
+const {createFolder,allFolder} =require("../Controllers/FoldersController");
 
 router.post("/createFolder",  async(req, res)=>{
     const { subfolder } = req.body;
@@ -12,24 +12,16 @@ router.post("/createFolder",  async(req, res)=>{
        res.json(await createFolder(subfolder));
     }catch(err){
         console.log("No se pudo ejecutar la funcion createFolder " +err);
-        res.json("No se pudo ejecutar la funcion createFolder " +err)
+        res.json("No se pudo ejecutar la funcion createFolder " +err);
     }
 });
 
 router.get("/allFolders", async(req,res) => {
     try{
-        const folder = await Folders.findAll()
-        const substringRemove= "imagesMatias/";
-        const folderName = folder.map(name=> (
-          {
-           name:name.folderName.replace(substringRemove,""),
-           id: name.id
-          }
-        ));
-        res.json(folderName)
+        res.json(await allFolder());
     }catch(error){
-        console.log(error)
-        res.json("Error al obtener las carpetas");
+        console.log("No se pudo ejecutar la funcion allFolder " +err);
+        res.json("No se pudo ejecutar la funcion allFolder " +err);
     }
 });
 
