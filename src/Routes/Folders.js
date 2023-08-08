@@ -32,6 +32,4 @@ router.delete("/deleteFolder/:idDb",verifyToken,async(req, res) => {
     }
 });
 
-
-
 module.exports = router;
