@@ -1,8 +1,9 @@
 const {Router} = require("express");
 const router = Router();
 const {createFolder,allFolder,deleteFolder} =require("../Controllers/FoldersController");
+const {verifyToken} = require('../Controllers/LoginJwtController');
 
-router.post("/createFolder",  async(req, res)=>{
+router.post("/createFolder",verifyToken,async(req, res)=>{
     const { subfolder } = req.body;
     try{
        res.json(await createFolder(subfolder));
@@ -12,7 +13,7 @@ router.post("/createFolder",  async(req, res)=>{
     }
 });
 
-router.get("/allFolders", async(req,res) => {
+router.get("/allFolders",verifyToken, async(req,res) => {
     try{
         res.json(await allFolder());
     }catch(error){
@@ -21,7 +22,7 @@ router.get("/allFolders", async(req,res) => {
     }
 });
 
-router.delete("/deleteFolder/:idDb",async(req, res) => {
+router.delete("/deleteFolder/:idDb",verifyToken,async(req, res) => {
     const {idDb} = req.params
     try{
         res.json(await deleteFolder(idDb));
