@@ -29,9 +29,43 @@ const contact =async(name,lastname,email,message)=>{
             }
           });
     })
-     
+}
+
+
+const validateForm = (name,lastname,email,message)=>{
+  let status = true;
+  let messageResponse = [];
+  const strings =/^[a-zA-Z]+$/;
+  const emailInput=/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+  try {
+    switch (true) {
+      case !name:
+        status = false;
+        messageResponse.push({err:"El nombre es obligatorio "});
+      case !lastname:
+        status = false;
+        messageResponse.push({err:"El apellido es obligatorio "});
+      case !email:
+        status = false;
+        messageResponse.push({err:"El email es obligatorio "});
+      case !message:
+        status = false;
+        messageResponse.push({err:"El mensaje es obligatorio "});
+      case strings.test(name) :
+        status = false;
+        messageResponse.push({err:"No se permiten numeros o simbolos en el campo nombre"});
+      case  strings.test(lastname):
+        messageResponse.push({err:"No se permiten numeros o simbolos en el campo apellido"});
+      case emailInput.test(email):
+        messageResponse.push({err:"Debe ingresar un email"});
+    }
+    return { status, messageResponse };
+    }catch(err){
+        return "No se pudo validar el formulario";
+    }
 }
 
 module.exports ={
-    contact
+    contact,
+    validateForm
 }

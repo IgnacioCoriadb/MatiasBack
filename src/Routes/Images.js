@@ -2,9 +2,10 @@ const {Router} = require("express");
 const router = Router();
 const multer = require('multer');
 const {insertCloudinary,getImage,deleteImageDb} = require("../Controllers/ImagesController");
+const {verifyToken} = require('../Controllers/LoginJwtController');
 const upload = multer();
 
-router.post("/uploadImage/:folder",upload.array('images', 50), async  (req, res)=>{
+router.post("/uploadImage/:folder",upload.array('images', 50),verifyToken, async  (req, res)=>{
     try{
         const uploadedFiles = req.files;
         const {folder} = req.params;
@@ -28,7 +29,7 @@ router.get("/allImage/:folder?", async (req, res) =>{
   }
 });
 
-router.delete("/deleteImage/:idDb",async(req, res) => {
+router.delete("/deleteImage/:idDb",verifyToken, async(req, res) => {
   const {idDb} = req.params;
   try{
     const resutl =await deleteImageDb(idDb);
