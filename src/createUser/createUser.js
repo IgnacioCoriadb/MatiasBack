@@ -12,17 +12,14 @@ const createUser = async () =>{
             const plainPassword = process.env.PASSWORD_JWT;
             const plainUser =process.env.USER_JWT;
             const saltRounds = 10;
-            const hashedPassword = bcrypt.hash(plainPassword, saltRounds);
-            const hashedUser = bcrypt.hash(plainUser,saltRounds);
-            await User.create({user: hashedUser, password: hashedPassword});
+            const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
+            const hashedUser = await bcrypt.hash(plainUser,saltRounds);
+            await User.create({user: hashedUser, password: hashedPassword, role:"admin"});
             console.log('Usuario creado exitosamente.');
         }
     }catch(err){
         console.log("No se pudo ejecutar la consulta createUser " + err)
     }
 }
-
-
-
 
 module.exports = { createUser };
