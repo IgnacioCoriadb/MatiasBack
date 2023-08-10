@@ -37,6 +37,7 @@ const validateForm = (name,lastname,email,message)=>{
   let messageResponse = [];
   const strings =/^[a-zA-Z]+$/;
   const emailInput=/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+  console.log(name,lastname,email,message)
   try {
     switch (true) {
       case !name:
@@ -51,12 +52,12 @@ const validateForm = (name,lastname,email,message)=>{
       case !message:
         status = false;
         messageResponse.push({err:"El mensaje es obligatorio "});
-      case strings.test(name) :
+      case !strings.test(name) :
         status = false;
         messageResponse.push({err:"No se permiten numeros o simbolos en el campo nombre"});
-      case  strings.test(lastname):
+      case  !strings.test(lastname):
         messageResponse.push({err:"No se permiten numeros o simbolos en el campo apellido"});
-      case emailInput.test(email):
+      case !emailInput.test(email):
         messageResponse.push({err:"Debe ingresar un email"});
     }
     return { status, messageResponse };
