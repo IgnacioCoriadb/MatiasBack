@@ -58,7 +58,7 @@ const compareLogin = async(plainUser, plainPassword, hashedUser, hashedPassword)
       return false;
     }
   }catch(err){
-    console.error('Error al comparar contraseñas:', error);
+    console.error('Error al comparar contraseñas:', err);
     return false;
   }
 }
