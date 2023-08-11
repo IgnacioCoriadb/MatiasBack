@@ -21,10 +21,12 @@ if (resultCompareLogin) {
     // Si las credenciales son válidas, generamos un token JWT
     const payload = { user_id: userId, role: userRole }; // Puedes personalizar el payload según tus necesidades
     const token = jwt.sign(payload, secretKey, { expiresIn: '2h' }); // Puedes ajustar el tiempo de expiración según tus necesidades
-
+  console.log(token);
     return { token };
   } else {
-    return { error: 'Usuario o contraseña incorrecto' };
+    const error = new Error('Usuario o contraseña incorrecto');
+    error.status = 401; 
+    throw error;
   }
 }
 // Middleware para verificar el token en las rutas protegidas
