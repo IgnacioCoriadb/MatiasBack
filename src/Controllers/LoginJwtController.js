@@ -14,19 +14,14 @@ const login = async( username, password ) => {
   const userRole = await user.role;
 
   const resultCompareLogin= await compareLogin(username, password, userDb, passwordDb);
-  console.log("resultCompareLogin " + resultCompareLogin)
+  // console.log("resultCompareLogin " + resultCompareLogin)
 
-  // Verificación ficticia de usuario
-if (resultCompareLogin) {
-    // Si las credenciales son válidas, generamos un token JWT
-    const payload = { user_id: userId, role: userRole }; // Puedes personalizar el payload según tus necesidades
-    const token = jwt.sign(payload, secretKey, { expiresIn: '2h' }); // Puedes ajustar el tiempo de expiración según tus necesidades
-  console.log(token);
-    return { token };
+  if (resultCompareLogin) {
+      const payload = { user_id: userId, role: userRole }; 
+      const token = jwt.sign(payload, secretKey, { expiresIn: '2h' });
+    return { success: true, token: token };
   } else {
-    const error = new Error('Usuario o contraseña incorrecto');
-    error.status = 401; 
-    throw error;
+    return { success: false, token: null }; 
   }
 }
 // Middleware para verificar el token en las rutas protegidas
@@ -36,9 +31,8 @@ const verifyToken = (req, res, next) => {
    if (!authHeader || !authHeader.startsWith('Bearer ')) {
      return res.status(401).json({ error: 'Token no proporcionado' });
    }
- 
+
    const token = authHeader.split(' ')[1]; // Obtenemos el token sin la palabra "Bearer" y el espacio
- 
    jwt.verify(token, secretKey, (err, decoded) => {
      if (err) {
        return res.status(403).json({ error: 'Token inválido' });
