@@ -1,8 +1,8 @@
 const {Router} = require('express');
 const router = Router();
-const {login} = require('../Controllers/LoginJwtController');
+const {login,logout} = require('../Controllers/LoginJwtController');
 
-router.post("/", async (req, res) => {
+router.post("/login", async (req, res) => {
     const { username, password } = req.body;
     try {
         const result = await login(username, password);
@@ -11,5 +11,15 @@ router.post("/", async (req, res) => {
         res.status(401).json({ success: false, message: "Usuario o contraseña incorrecto" });
     }
 });
+
+router.post("/logout",async(req,res)=>{
+    try{
+        const {token} = req.body;
+        res.json(await logout(token))
+    }catch(err){
+        console.log("No se pudo ejecutar la funcion allFolder " +err);
+        res.json("No se pudo cerrar la sesion ");
+    }
+})
 
 module.exports = router;

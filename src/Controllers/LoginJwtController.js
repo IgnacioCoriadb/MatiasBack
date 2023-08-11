@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const secretKey =process.env.SECRET_KEY_JWT;
+const activeTokens=[];
 
 const login = async( username, password ) => {
   const user = await User.findOne();
@@ -59,10 +60,23 @@ const compareLogin = async(plainUser, plainPassword, hashedUser, hashedPassword)
   }
 }
 
+const logout =(token)=>{
+  try{
+    // Invalida el token y lo remueve de la lista de tokens activos
+    const index = activeTokens.indexOf(token);
+    if (index !== -1) {
+      activeTokens.splice(index, 1);
+    }
+    return { message: "Sesión cerrada exitosamente" };
+  }catch(err) {
+    return { message: err.message}
+  }
+}
 
 
 
 module.exports= {
     login,
-    verifyToken
+    verifyToken,
+    logout
 }

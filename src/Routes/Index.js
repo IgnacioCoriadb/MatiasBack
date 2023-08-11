@@ -9,7 +9,7 @@ const router = Router();
 router.use("/folders",folders);
 router.use("/images",images);
 router.use("/contact",contact);
-router.use("/login",login);
+router.use("/",login);
 
 
 module.exports = router;
