@@ -11,14 +11,14 @@ const createFolder = async (subfolder)=>{
         cloudinary.api.create_folder(routeSubFolder, async(error, result) => {
             if (error) {
                 console.error('Error al crear la subcarpeta:', error);
-                reject('Error al crear la subcarpeta')
+                reject({ status: 500, message:'Error al crear la carpeta'})
             } else {
                 try{
                     await Folders.create({id: uuidv4(),folderName:subfolder})
                     resolve(`Carpeta ${subfolder} creada exitosamente`)
                 }catch(error){
                     console.error('Error al crear la subcarpeta:', error)
-                    reject ('Error al crear la carpeta')
+                    reject ({ status: 500, message:'Error al crear la carpeta'})
                 }
             }
         });

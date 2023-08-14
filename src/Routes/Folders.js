@@ -9,7 +9,7 @@ router.post("/createFolder",verifyToken,async(req, res)=>{
        res.json(await createFolder(subfolder));
     }catch(err){
         console.log("No se pudo ejecutar la funcion createFolder " +err);
-        res.json("No se pudo ejecutar la funcion createFolder " +err);
+        res.status(err.status || 500).json(err.message);
     }
 });
 
