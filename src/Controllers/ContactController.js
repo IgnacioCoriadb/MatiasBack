@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 const contact =async(name,lastname,email,message)=>{
     const mailOptions = {
         from: `${name} <${email}>`,
-        to: 'ignaciocoriadb@gmail.com', // Cambia esto por tu dirección de correo de destino
+        to: 'matlongx@gmail.com', // Cambia esto por tu dirección de correo de destino
         subject: name,
         text: `Nombre: ${name}\Apellido: ${lastname}\nCorreo electrónico: ${email}\nMensaje: ${message}`,
       };
