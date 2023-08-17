@@ -19,7 +19,7 @@ const login = async( username, password ) => {
 
   if (resultCompareLogin) {
       const payload = { user_id: userId, role: userRole }; 
-      const token = jwt.sign(payload, secretKey, { expiresIn: '2h' });
+      const token = jwt.sign(payload, secretKey, { expiresIn: '3h' });
     return { success: true, token: token };
   } else {
     return { success: false, token: null }; 
