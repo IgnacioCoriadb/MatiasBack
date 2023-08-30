@@ -3,7 +3,7 @@ const {Images,uuidv4} = require("../Models/Images");
 
 const cloudinary = require("../Cloudinary/Cloudinary");
 
-const createFolder = async (subfolder)=>{
+const createFolder = async (subfolder,description,measurements,year)=>{
     const folder = 'imagesMatias';
     const routeSubFolder = `${folder}/${subfolder}`;
     // Crea la subcarpeta en Cloudinary
@@ -14,7 +14,7 @@ const createFolder = async (subfolder)=>{
                 reject({ status: 500, message:'Error al crear la carpeta'})
             } else {
                 try{
-                    await Folders.create({id: uuidv4(),folderName:subfolder})
+                    await Folders.create({id: uuidv4(),folderName:subfolder,description,measurements,year})
                     resolve(`Carpeta ${subfolder} creada exitosamente`)
                 }catch(error){
                     console.error('Error al crear la subcarpeta:', error)
@@ -23,6 +23,21 @@ const createFolder = async (subfolder)=>{
             }
         });
     })
+}
+
+const folder = async(folderName)=>{
+    try{
+        const dataFolder =await Folders.findAll({
+            where: {
+                folderName: folderName,
+            },
+            attributes: ['folderName','description','measurements','year'],
+          });
+          return dataFolder.length > 0 ? dataFolder : "No se encontró la carpeta "+folderName;
+    }catch(error){
+        console.log(error)
+        return "Error al obtener la data de la carpeta";
+    }
 }
 
 const allFolder =async() => {
@@ -96,5 +111,6 @@ const deleteFolder = async(idDb)=>{
 module.exports = {
     createFolder,
     allFolder,
-    deleteFolder
+    deleteFolder,
+    folder
 }

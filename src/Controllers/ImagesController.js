@@ -14,7 +14,6 @@ const insertCloudinary =async(uploadedFiles,folder,subfolder)=>{
           folderName:folder
         }
       })
-      console.log(folderExitst)
       if(folderExitst.length > 0){
           const uploadPromises = uploadedFiles.map(async (file) => {
               const compressedImageBuffer = await sharp(file.buffer)

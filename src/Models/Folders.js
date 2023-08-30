@@ -11,6 +11,18 @@ const Folders = sequelize.define('Folders',{
         type: DataTypes.STRING,
         allowNull: false,
     },
+    description:{
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    measurements:{ //medidas
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    year:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
     
 })
 
