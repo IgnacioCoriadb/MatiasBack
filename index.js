@@ -10,7 +10,7 @@ const User = require('./src/Models/User');
 
 
 
-sequelize.sync({ force: false }).then(async() => await createUser())
+sequelize.sync({ force: true }).then(async() => await createUser())
 
 
 server.listen(PORT, () => console.log("SERVER IN PORT " + PORT));
