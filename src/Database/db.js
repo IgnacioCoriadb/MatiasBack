@@ -13,16 +13,21 @@ const {
     DB_DEPLOY
 } =process.env
 
-// const sequelize = new Sequelize(`postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_DATABASE}`, {
+const sequelize = new Sequelize({
+  dialect: 'postgres',
+  host: DB_HOST,
+  username: DB_USERNAME,
+  password: DB_PASSWORD,
+  database: DB_DATABASE,
+  port: 5432, 
+  logging: false, 
+});
+
+
+// const sequelize = new Sequelize(`${DB_DEPLOY}`, {
 //   logging: false, // set to console.log to see the raw SQL queries
 //   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 // });
-
-
-const sequelize = new Sequelize(`${DB_DEPLOY}`, {
-  logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-});
 
 
   async function testConnection() {
