@@ -22,11 +22,11 @@ sequelize.sync({ force: false }).then(async() => await createUser())
 
 // server.listen(PORT, () => console.log("SERVER IN PORT " + PORT));
 
-const server = http.createServer((req, res) => {
+const httpServer  = http.createServer((req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
     res.end('Hola mundo!\n'); //CAMBIAR POR SERVER const server = require('./app');
 });
-server.listen(port, hostname, () => {
+httpServer.listen(port, hostname, () => {
     console.log(`Servidor corriendo en en http://${hostname}:${port}/`);
 });
