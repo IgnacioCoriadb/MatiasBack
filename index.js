@@ -3,7 +3,7 @@ const server = require('./app');
 const serverApp = require('./app'); // Importa el servidor Express
 const http = require('http');
 const hostname = '127.0.0.1';
-const port = 3001;
+const port = 3002;
 
 const {sequelize} = require('./src/Database/db');
 const  {createUser} = require("./src/createUser/createUser");
