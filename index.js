@@ -1,5 +1,6 @@
 const server = require('./app');
-const PORT = 3001;
+// const PORT = 3001;
+const PORT = 80;
 const {sequelize} = require('./src/Database/db');
 const  {createUser} = require("./src/createUser/createUser");
 //?-----------Moldels------------
