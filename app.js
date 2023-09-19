@@ -11,11 +11,12 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
 server.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://vps-3582101-x.dattaweb.com');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-  });
+  res.setHeader('Access-Control-Allow-Origin', 'https://matias-front.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
   
 
 server.use('/', routes);
