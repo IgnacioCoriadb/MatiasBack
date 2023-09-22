@@ -1,4 +1,4 @@
-const httpServer  = require('./app');
+const server = require('./app');
 const PORT = 3001;
 const {sequelize} = require('./src/Database/db');
 const  {createUser} = require("./src/createUser/createUser");
@@ -13,4 +13,4 @@ const User = require('./src/Models/User');
 sequelize.sync({ force: false }).then(async() => await createUser())
 
 
-httpServer.listen(PORT, () => console.log("SERVER IN PORT " + PORT));
+server.listen(PORT, () => console.log("SERVER IN PORT " + PORT));
