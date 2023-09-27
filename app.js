@@ -11,7 +11,7 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
 server.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://longoperrig.com.ar:3000');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
